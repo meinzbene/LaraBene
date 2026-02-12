@@ -2,44 +2,979 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Testseite</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine 💘</title>
   <style>
-    body { font-family: system-ui, Arial, sans-serif; margin: 40px; line-height: 1.5; }
-    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; max-width: 700px; }
-    h1 { margin-top: 0; }
-    code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
+    :root{
+      --bg1:#2a0016;
+      --bg2:#12000a;
+      --card:#ffffff10;
+      --card2:#ffffff14;
+      --text:#fff;
+      --muted:#ffd0e6;
+      --pink:#ff4fa3;
+      --hot:#ff2d55;
+      --rose:#ff7ab6;
+      --good:#2ee59d;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --ring: 0 0 0 8px rgba(255,79,163,.18);
+      --radius: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,79,163,.35), transparent 60%),
+        radial-gradient(1000px 700px at 85% 25%, rgba(255,45,85,.28), transparent 55%),
+        radial-gradient(900px 700px at 60% 90%, rgba(255,122,182,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* floating hearts background */
+    .bg-hearts{
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.18;
+      filter: blur(.2px);
+    }
+    .bg-hearts span{
+      position:absolute;
+      font-size: clamp(16px, 2.6vw, 30px);
+      animation: floatUp linear infinite;
+      transform: translateY(120vh);
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(120vh) translateX(0) rotate(0deg); }
+      to  { transform: translateY(-20vh) translateX(40px) rotate(18deg); }
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: 28px 18px;
+    }
+
+    .card{
+      width:min(920px, 96vw);
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .topbar{
+      padding: 18px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      gap: 12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:44px; height:44px;
+      display:grid; place-items:center;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.24), rgba(255,255,255,.08));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 30px rgba(255,79,163,.18);
+    }
+    .title{
+      display:flex; flex-direction:column; line-height:1.1;
+    }
+    .title strong{
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .title span{
+      font-size: 13px;
+      color: rgba(255,208,230,.88);
+    }
+
+    .pill{
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.9);
+      display:flex; align-items:center; gap:8px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--pink);
+      box-shadow: 0 0 0 6px rgba(255,79,163,.18);
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+      padding: 18px;
+    }
+    @media (max-width: 880px){
+      .content{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      background: rgba(0,0,0,.12);
+      overflow:hidden;
+    }
+    .panelHeader{
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      gap: 12px;
+    }
+    .panelHeader h2{
+      margin:0;
+      font-size: 14px;
+      letter-spacing:.2px;
+      font-weight: 700;
+      color: rgba(255,255,255,.92);
+    }
+    .panelHeader small{
+      color: rgba(255,208,230,.88);
+      font-size: 12px;
+    }
+
+    /* Game area */
+    .game{
+      position:relative;
+      height: 420px;
+      background:
+        radial-gradient(700px 350px at 30% 30%, rgba(255,79,163,.22), transparent 60%),
+        radial-gradient(700px 350px at 80% 60%, rgba(255,45,85,.18), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.18));
+      overflow:hidden;
+    }
+    @media (max-width: 520px){
+      .game{ height: 380px; }
+    }
+
+    .basket{
+      position:absolute;
+      left:50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 54px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.10));
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: 0 16px 40px rgba(0,0,0,.28);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      user-select:none;
+      touch-action:none;
+    }
+    .basket .heart{
+      font-size: 22px;
+      filter: drop-shadow(0 8px 10px rgba(255,79,163,.22));
+    }
+    .basket .hint{
+      font-size: 12px;
+      color: rgba(255,208,230,.92);
+    }
+
+    .drop{
+      position:absolute;
+      top:-40px;
+      font-size: 28px;
+      will-change: transform;
+      filter: drop-shadow(0 12px 18px rgba(255,79,163,.14));
+      user-select:none;
+    }
+
+    .hud{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .hud .stat{
+      display:flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      font-size: 12px;
+      color: rgba(255,255,255,.92);
+      user-select:none;
+    }
+    .hud .stat b{ font-variant-numeric: tabular-nums; }
+    .hud .stat .miniDot{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(255,255,255,.7);
+    }
+
+    /* Right panel (proposal) */
+    .proposal{
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+    .bigTitle{
+      margin:0;
+      font-size: 26px;
+      line-height: 1.05;
+      letter-spacing: -.3px;
+    }
+    .sub{
+      margin:0;
+      color: rgba(255,208,230,.92);
+      font-size: 14px;
+      line-height:1.45;
+    }
+
+    .goalBox{
+      border: 1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding: 12px 12px;
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .goalBox .badge{
+      width:38px; height:38px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      background: rgba(255,79,163,.16);
+      border: 1px solid rgba(255,79,163,.30);
+      box-shadow: 0 10px 30px rgba(255,79,163,.12);
+      flex: 0 0 auto;
+    }
+    .goalBox .badge span{ font-size: 18px; }
+    .goalBox p{
+      margin:0;
+      font-size: 13px;
+      color: rgba(255,255,255,.90);
+      line-height:1.4;
+    }
+    .goalBox p b{ color: #fff; }
+
+    .lock{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.10);
+      border-radius: 18px;
+      padding: 14px 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .lock::before{
+      content:"";
+      position:absolute; inset:-60px;
+      background: radial-gradient(circle at 25% 30%, rgba(255,79,163,.22), transparent 55%);
+      transform: rotate(8deg);
+      pointer-events:none;
+    }
+
+    .questionRow{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+
+    .checkline{
+      display:flex; align-items:center; gap:10px;
+      opacity:.55;
+      transform: translateY(2px);
+    }
+    .check{
+      width:26px; height:26px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      display:grid; place-items:center;
+      font-weight: 900;
+      color: var(--good);
+    }
+    .checkline span{
+      color: rgba(255,208,230,.92);
+      font-size: 13px;
+    }
+
+    .qtext{
+      margin: 4px 0 0 0;
+      font-size: 18px;
+      line-height:1.2;
+      opacity:.55;
+    }
+
+    .btnRow{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      flex-wrap:wrap;
+      position:relative;
+      padding-top: 6px;
+      min-height: 62px;
+    }
+
+    button{
+      border: 0;
+      cursor:pointer;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 750;
+      letter-spacing:.2px;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      user-select:none;
+    }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    .btnYes{
+      background: linear-gradient(180deg, rgba(255,79,163,.98), rgba(255,45,85,.98));
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(255,45,85,.25);
+    }
+    .btnYes:hover{ filter: brightness(1.04); box-shadow: 0 18px 38px rgba(255,45,85,.28); }
+
+    .btnNo{
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.90);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 14px 30px rgba(0,0,0,.22);
+      position:absolute; /* will move around */
+      left: 160px;
+      top: 6px;
+    }
+    .btnNo:hover{ filter: brightness(1.03); }
+
+    .disabled{
+      pointer-events:none;
+      opacity:.38;
+      filter: saturate(.8);
+    }
+
+    .unlocked .checkline{ opacity:1; transform:none; }
+    .unlocked .qtext{ opacity:1; }
+    .unlocked .btnYes{ animation: pop .35s ease; }
+    @keyframes pop{
+      0%{ transform: scale(.98); }
+      60%{ transform: scale(1.02); }
+      100%{ transform: scale(1); }
+    }
+
+    .footer{
+      padding: 14px 18px 18px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      color: rgba(255,208,230,.85);
+      font-size: 12px;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 2px 7px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.92);
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0;
+      display:none;
+      place-items:center;
+      background: rgba(0,0,0,.50);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      padding: 20px;
+    }
+    .overlay.show{ display:grid; }
+    .modal{
+      width:min(560px, 92vw);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      padding: 18px 18px 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .modal::before{
+      content:"";
+      position:absolute; inset:-80px;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(255,79,163,.25), transparent 55%),
+        radial-gradient(circle at 75% 65%, rgba(255,45,85,.22), transparent 60%);
+      transform: rotate(-6deg);
+      pointer-events:none;
+    }
+    .modal h3{
+      margin: 0 0 6px 0;
+      font-size: 22px;
+      letter-spacing:-.2px;
+      position:relative;
+    }
+    .modal p{
+      margin:0 0 14px 0;
+      color: rgba(255,208,230,.94);
+      line-height:1.5;
+      font-size: 14px;
+      position:relative;
+    }
+    .modal .closeRow{
+      display:flex;
+      justify-content:flex-end;
+      gap: 10px;
+      position:relative;
+    }
+    .btnSoft{
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 28px rgba(0,0,0,.20);
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-weight: 750;
+    }
+
+    /* Confetti */
+    .confetti{
+      position:fixed; inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index: 60;
+    }
+    .confetti i{
+      position:absolute;
+      top:-10vh;
+      width: 10px;
+      height: 16px;
+      border-radius: 3px;
+      opacity: .95;
+      transform: translateY(-10vh) rotate(0deg);
+      animation: fall linear forwards;
+    }
+    @keyframes fall{
+      to{
+        transform: translateY(120vh) rotate(720deg);
+        opacity: .95;
+      }
+    }
+
+    /* toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(10px);
+      padding: 10px 12px;
+      border-radius: 16px;
+      color: rgba(255,255,255,.92);
+      font-size: 13px;
+      box-shadow: 0 14px 50px rgba(0,0,0,.35);
+      display:none;
+      z-index: 70;
+    }
+    .toast.show{ display:block; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Test Inhalt</h1>
-    <p>Hallo! Das ist eine <strong>Testseite</strong> mit etwas Beispieltext.</p>
+  <div class="bg-hearts" aria-hidden="true" id="bgHearts"></div>
 
-    <h2>Liste</h2>
-    <ul>
-      <li>Eintrag 1</li>
-      <li>Eintrag 2</li>
-      <li>Eintrag 3</li>
-    </ul>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">💘</div>
+          <div class="title">
+            <strong>Valentine Quest</strong>
+            <span>Catch hearts, unlock the question.</span>
+          </div>
+        </div>
+        <div class="pill" title="Game status">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Collect 10 hearts to unlock</span>
+        </div>
+      </div>
 
-    <h2>Button</h2>
-    <button id="btn">Klick mich</button>
-    <p id="output">Noch nicht geklickt.</p>
+      <div class="content">
+        <!-- LEFT: GAME -->
+        <div class="panel">
+          <div class="panelHeader">
+            <h2>Mini-Spiel: Herzen fangen</h2>
+            <div class="hud">
+              <div class="stat"><span class="miniDot"></span> <span>Score: <b id="score">0</b></span></div>
+              <div class="stat"><span class="miniDot"></span> <span>Goal: <b id="goal">10</b></span></div>
+              <div class="stat"><span class="miniDot"></span> <span>Time: <b id="time">30</b>s</span></div>
+            </div>
+          </div>
 
-    <p style="margin-top:16px;">
-      Tipp: Öffne die Konsole und schau dir <code>console.log</code> an.
-    </p>
+          <div class="game" id="game">
+            <div class="basket" id="basket" aria-label="Basket">
+              <span class="heart">💗</span>
+              <span class="hint">Move with <span class="kbd">A</span>/<span class="kbd">D</span> or drag</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: PROPOSAL -->
+        <div class="panel">
+          <div class="panelHeader">
+            <h2>Das Ziel</h2>
+            <small>erst spielen, dann fragen 😉</small>
+          </div>
+
+          <div class="proposal">
+            <h1 class="bigTitle">Ein kleines Spiel…<br/>für eine große Frage 💞</h1>
+            <p class="sub">
+              Sammle genug Herzen, um die Frage freizuschalten.
+              Danach wartet eine Entscheidung (eine ist… sagen wir… schwer zu treffen 😄).
+            </p>
+
+            <div class="goalBox">
+              <div class="badge"><span>🎯</span></div>
+              <p>
+                <b>Ziel:</b> Fange <b id="goalInline">10</b> Herzen in <b>30 Sekunden</b>.
+                <br/>Tipp: Kleine Bewegungen reichen – du schaffst das.
+              </p>
+            </div>
+
+            <div class="lock" id="lock">
+              <div class="questionRow" id="questionRow">
+                <div class="checkline">
+                  <div class="check" id="checkBox">✓</div>
+                  <span id="unlockText">Noch gesperrt – erst das Ziel schaffen.</span>
+                </div>
+
+                <p class="qtext" id="qtext">Do you want to be my valentine?</p>
+
+                <div class="btnRow" id="btnRow">
+                  <button class="btnYes disabled" id="yesBtn" disabled>Yes 💘</button>
+                  <button class="btnNo disabled" id="noBtn" disabled>No 🙃</button>
+                </div>
+              </div>
+            </div>
+
+            <p class="sub" style="margin-top:auto;">
+              PS: Wenn du neu startest: Refresh / neu laden.  
+              Viel Spaß 💗
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>Made with ❤️ (and a tiny bit of cheeky UI).</div>
+        <div>
+          Steuerung: <span class="kbd">A</span>/<span class="kbd">D</span> · oder am Korb ziehen · auf Mobile wischen
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script>
-    const btn = document.getElementById("btn");
-    const out = document.getElementById("output");
+  <!-- Success modal -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Valentine success">
+    <div class="modal">
+      <h3>Yay! 💖</h3>
+      <p>
+        Das ist offiziell: <b>Du bist mein Valentine!</b>  
+        Danke fürs Mitspielen – du hast gerade ein Herz (und das Spiel) gewonnen ✨
+      </p>
+      <div class="closeRow">
+        <button class="btnSoft" id="closeModal">Aww 🥰</button>
+      </div>
+    </div>
+  </div>
 
-    btn.addEventListener("click", () => {
-      out.textContent = "Button wurde geklickt ✅";
-      console.log("Test: Button click");
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="toast" id="toast">Unlocked! Now… choose wisely 😇</div>
+
+  <script>
+    // ---------- Cute background hearts ----------
+    (function spawnBgHearts(){
+      const root = document.getElementById('bgHearts');
+      const hearts = ["💗","💖","💘","💞","💓","💕"];
+      const count = 18;
+      for(let i=0;i<count;i++){
+        const s = document.createElement('span');
+        s.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        const left = Math.random()*100;
+        const delay = Math.random()*8;
+        const dur = 10 + Math.random()*10;
+        s.style.left = left + "vw";
+        s.style.animationDelay = delay + "s";
+        s.style.animationDuration = dur + "s";
+        s.style.top = (Math.random()*100) + "vh";
+        root.appendChild(s);
+      }
+    })();
+
+    // ---------- Game setup ----------
+    const game = document.getElementById('game');
+    const basket = document.getElementById('basket');
+    const scoreEl = document.getElementById('score');
+    const goalEl = document.getElementById('goal');
+    const goalInline = document.getElementById('goalInline');
+    const timeEl = document.getElementById('time');
+
+    const statusText = document.getElementById('statusText');
+    const statusDot = document.getElementById('statusDot');
+
+    const lock = document.getElementById('lock');
+    const questionRow = document.getElementById('questionRow');
+    const unlockText = document.getElementById('unlockText');
+    const qtext = document.getElementById('qtext');
+
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn  = document.getElementById('noBtn');
+    const btnRow = document.getElementById('btnRow');
+
+    const overlay = document.getElementById('overlay');
+    const closeModal = document.getElementById('closeModal');
+    const confettiRoot = document.getElementById('confetti');
+    const toast = document.getElementById('toast');
+
+    const GOAL = 10;
+    const GAME_TIME = 30; // seconds
+    goalEl.textContent = GOAL;
+    goalInline.textContent = GOAL;
+
+    let score = 0;
+    let timeLeft = GAME_TIME;
+    let unlocked = false;
+    let running = true;
+
+    // basket movement
+    let basketX = 0.5; // normalized 0..1
+    let dragging = false;
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function placeBasket(){
+      const w = game.clientWidth;
+      const bw = basket.offsetWidth;
+      const x = basketX * (w - bw);
+      basket.style.left = (x + bw/2) + "px";
+    }
+
+    function setToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(setToast._t);
+      setToast._t = setTimeout(()=>toast.classList.remove('show'), 1800);
+    }
+
+    // keyboard control
+    const keys = { a:false, d:false, ArrowLeft:false, ArrowRight:false };
+    window.addEventListener('keydown', (e)=>{
+      if(e.key in keys){ keys[e.key]=true; }
     });
+    window.addEventListener('keyup', (e)=>{
+      if(e.key in keys){ keys[e.key]=false; }
+    });
+
+    // pointer drag control
+    basket.addEventListener('pointerdown', (e)=>{
+      dragging = true;
+      basket.setPointerCapture(e.pointerId);
+    });
+    basket.addEventListener('pointerup', ()=> dragging = false);
+    basket.addEventListener('pointercancel', ()=> dragging = false);
+    basket.addEventListener('pointermove', (e)=>{
+      if(!dragging) return;
+      const rect = game.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      basketX = clamp(x, 0, 1);
+      placeBasket();
+    });
+
+    // touch swipe on game area too
+    game.addEventListener('pointermove', (e)=>{
+      if(!dragging) return;
+      const rect = game.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      basketX = clamp(x, 0, 1);
+      placeBasket();
+    });
+
+    // Keep basket positioned on resize
+    window.addEventListener('resize', placeBasket);
+
+    // drops
+    const dropEmojis = ["💗","💖","💘","💞"];
+    function spawnDrop(){
+      if(!running) return;
+      const d = document.createElement('div');
+      d.className = 'drop';
+      d.textContent = dropEmojis[Math.floor(Math.random()*dropEmojis.length)];
+      const x = Math.random() * (game.clientWidth - 30);
+      d.style.left = x + 'px';
+      d.dataset.x = x;
+      d.dataset.y = -40;
+      d.dataset.v = (120 + Math.random()*140); // px per sec
+      game.appendChild(d);
+    }
+
+    // collision check
+    function intersects(a, b){
+      const ar = a.getBoundingClientRect();
+      const br = b.getBoundingClientRect();
+      return !(ar.right < br.left || ar.left > br.right || ar.bottom < br.top || ar.top > br.bottom);
+    }
+
+    let last = performance.now();
+    let spawnAcc = 0;
+
+    function loop(now){
+      const dt = (now - last) / 1000;
+      last = now;
+
+      // move basket with keys
+      const speed = 0.9; // normalized per sec
+      const dir = (keys.d || keys.ArrowRight ? 1 : 0) - (keys.a || keys.ArrowLeft ? 1 : 0);
+      if(dir !== 0){
+        basketX = clamp(basketX + dir * speed * dt, 0, 1);
+        placeBasket();
+      }
+
+      // spawn drops
+      if(running){
+        spawnAcc += dt;
+        // increase spawn rate slightly over time
+        const interval = Math.max(0.35, 0.75 - (score * 0.02));
+        if(spawnAcc >= interval){
+          spawnAcc = 0;
+          spawnDrop();
+        }
+      }
+
+      // update drops
+      const drops = [...game.querySelectorAll('.drop')];
+      for(const d of drops){
+        const y = parseFloat(d.dataset.y) + parseFloat(d.dataset.v) * dt;
+        d.dataset.y = y;
+        d.style.transform = `translateY(${y}px)`;
+        if(intersects(d, basket)){
+          d.remove();
+          addScore(1);
+          continue;
+        }
+        if(y > game.clientHeight + 60){
+          d.remove();
+        }
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    function addScore(n){
+      score += n;
+      scoreEl.textContent = score;
+
+      const remaining = Math.max(0, GOAL - score);
+      statusText.textContent = remaining > 0 ? `Collect ${remaining} more to unlock` : `Unlocked! Ask the question 💘`;
+      statusDot.style.background = remaining > 0 ? 'var(--pink)' : 'var(--good)';
+
+      if(!unlocked && score >= GOAL){
+        unlock();
+      }
+    }
+
+    function unlock(){
+      unlocked = true;
+      lock.classList.add('unlocked');
+      questionRow.classList.add('unlocked');
+
+      unlockText.textContent = "Unlocked! Du hast es geschafft ✅";
+      qtext.style.opacity = 1;
+
+      yesBtn.classList.remove('disabled');
+      noBtn.classList.remove('disabled');
+      yesBtn.disabled = false;
+      noBtn.disabled  = false;
+
+      setToast("Unlocked! Now… choose wisely 😇");
+
+      // place the No button initially somewhere safe
+      moveNoButton();
+    }
+
+    // countdown
+    const timer = setInterval(()=>{
+      if(!running) return;
+      timeLeft -= 1;
+      timeEl.textContent = timeLeft;
+
+      if(timeLeft <= 0){
+        running = false;
+        clearInterval(timer);
+
+        // If not unlocked, give a gentle reset hint
+        if(!unlocked){
+          statusText.textContent = "Time’s up 😅 Refresh to try again";
+          statusDot.style.background = 'rgba(255,255,255,.7)';
+          setToast("Time’s up 😅 Refresh to try again");
+        } else {
+          statusText.textContent = "Unlocked 💘";
+          statusDot.style.background = 'var(--good)';
+        }
+      }
+    }, 1000);
+
+    // Ensure basket is placed after layout
+    requestAnimationFrame(placeBasket);
+    requestAnimationFrame(loop);
+
+    // ---------- The “unhittable” No button ----------
+    function moveNoButton(){
+      // Move within btnRow bounds, avoid overlapping Yes too much
+      const rowRect = btnRow.getBoundingClientRect();
+      const yesRect = yesBtn.getBoundingClientRect();
+
+      // Candidate region
+      const padding = 6;
+      const maxX = rowRect.width - noBtn.offsetWidth - padding;
+      const maxY = Math.max(0, rowRect.height - noBtn.offsetHeight - padding);
+
+      let x = Math.random() * maxX;
+      let y = Math.random() * maxY;
+
+      // Keep it away from Yes button area a bit
+      const yesLocalX = yesRect.left - rowRect.left;
+      const yesLocalY = yesRect.top - rowRect.top;
+
+      // If too close, push it
+      const dx = x - yesLocalX;
+      const dy = y - yesLocalY;
+      if(Math.hypot(dx, dy) < 120){
+        x = clamp(x + (dx >= 0 ? 120 : -120), 0, maxX);
+        y = clamp(y + (dy >= 0 ? 28 : -28), 0, maxY);
+      }
+
+      noBtn.style.left = x + 'px';
+      noBtn.style.top  = y + 'px';
+    }
+
+    // When the pointer gets close or hovers, dodge.
+    function dodge(e){
+      if(noBtn.disabled) return;
+      moveNoButton();
+      // tiny playful vibration
+      noBtn.animate(
+        [{ transform:'translateY(0px)' }, { transform:'translateY(-2px)' }, { transform:'translateY(0px)' }],
+        { duration: 140, easing: 'ease-out' }
+      );
+    }
+
+    noBtn.addEventListener('mouseenter', dodge);
+    noBtn.addEventListener('pointerenter', dodge);
+
+    // Also dodge when cursor is near
+    btnRow.addEventListener('pointermove', (e)=>{
+      if(noBtn.disabled) return;
+      const nr = noBtn.getBoundingClientRect();
+      const dist = Math.hypot(
+        (nr.left + nr.width/2) - e.clientX,
+        (nr.top + nr.height/2) - e.clientY
+      );
+      if(dist < 90) dodge();
+    });
+
+    // ---------- Yes => confetti + modal ----------
+    yesBtn.addEventListener('click', ()=>{
+      celebrate();
+      overlay.classList.add('show');
+    });
+    closeModal.addEventListener('click', ()=> overlay.classList.remove('show'));
+    overlay.addEventListener('click', (e)=>{
+      if(e.target === overlay) overlay.classList.remove('show');
+    });
+
+    function celebrate(){
+      makeConfetti(160);
+      burstHearts(18);
+      setToast("Yaaay! 💖");
+    }
+
+    function makeConfetti(n=120){
+      const colors = [
+        'rgba(255,79,163,.95)',
+        'rgba(255,45,85,.95)',
+        'rgba(255,122,182,.95)',
+        'rgba(255,255,255,.85)',
+        'rgba(255,208,230,.92)'
+      ];
+      const w = window.innerWidth;
+      for(let i=0;i<n;i++){
+        const p = document.createElement('i');
+        const x = Math.random() * w;
+        const size = 6 + Math.random()*8;
+        const dur = 2.2 + Math.random()*2.2;
+        const delay = Math.random()*0.15;
+        p.style.left = x + 'px';
+        p.style.width = (size*0.7) + 'px';
+        p.style.height = size + 'px';
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+        p.style.animationDuration = dur + 's';
+        p.style.animationDelay = delay + 's';
+        p.style.opacity = (0.75 + Math.random()*0.25).toFixed(2);
+        confettiRoot.appendChild(p);
+        setTimeout(()=>p.remove(), (dur+delay)*1000 + 200);
+      }
+    }
+
+    function burstHearts(n=14){
+      // Small heart particles from the center
+      const centerX = window.innerWidth/2;
+      const centerY = window.innerHeight/2;
+      const hearts = ["💗","💖","💞","💕","💘"];
+      for(let i=0;i<n;i++){
+        const s = document.createElement('span');
+        s.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        s.style.position = 'fixed';
+        s.style.left = centerX + 'px';
+        s.style.top  = centerY + 'px';
+        s.style.fontSize = (18 + Math.random()*18) + 'px';
+        s.style.pointerEvents = 'none';
+        s.style.zIndex = 65;
+        s.style.filter = 'drop-shadow(0 16px 20px rgba(255,79,163,.18))';
+        document.body.appendChild(s);
+
+        const angle = Math.random()*Math.PI*2;
+        const dist  = 120 + Math.random()*220;
+        const tx = Math.cos(angle)*dist;
+        const ty = Math.sin(angle)*dist - 80;
+
+        s.animate([
+          { transform:'translate(-50%,-50%) scale(.9)', opacity: 0.0 },
+          { transform:'translate(-50%,-50%) scale(1.1)', opacity: 1.0, offset: 0.15 },
+          { transform:`translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(.9)`, opacity: 0.0 }
+        ], { duration: 1200 + Math.random()*450, easing:'cubic-bezier(.2,.8,.2,1)' });
+
+        setTimeout(()=>s.remove(), 1800);
+      }
+    }
   </script>
 </body>
 </html>
