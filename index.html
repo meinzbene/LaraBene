@@ -10,7 +10,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-<img src="puzzle_image.svg" width="200">
 
         body {
             font-family: 'Georgia', serif;
@@ -1675,7 +1674,7 @@
                     // Set background position based on tile number
                     const row = Math.floor(tileNum / puzzleSize);
                     const col = tileNum % puzzleSize;
-                    tile.style.backgroundImage = 'url("puzzle_image.svg")';
+                    tile.style.backgroundImage = 'url("./puzzle_image.svg")';
                     tile.style.backgroundSize = "450px 450px";
                     tile.style.backgroundPosition = `${-col * 150}px ${-row * 150}px`;
                     
@@ -1927,5 +1926,6 @@
     </script>
 </body>
 </html>
+
 
 
