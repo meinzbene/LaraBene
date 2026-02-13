@@ -1,463 +1,1927 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lara & Bene 💘</title>
-
-<style>
-:root{
-  --pink:#ff4fa3;
-  --hot:#ff2d55;
-  --bg1:#14000c;
-  --bg2:#2b0018;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-body{
-  font-family:system-ui,-apple-system,sans-serif;
-  background:
-    radial-gradient(circle at 20% 20%, #ff4fa344, transparent 60%),
-    radial-gradient(circle at 80% 70%, #ff2d5544, transparent 60%),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-  color:white;
-  overflow-x:hidden;
-  animation:fade 1.5s ease forwards;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:scale(1.02)}
-  to{opacity:1;transform:scale(1)}
-}
-
-/* HERO */
-
-.hero{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
-
-.hero h1{
-  font-size:clamp(70px,10vw,150px);
-  font-weight:900;
-  letter-spacing:8px;
-  background:linear-gradient(45deg,#ff4fa3,#ff2d55,#ff80bf);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.hero h2{
-  font-size:clamp(40px,6vw,80px);
-  margin-top:10px;
-}
-
-button{
-  border:none;
-  padding:16px 28px;
-  border-radius:14px;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(45deg,var(--pink),var(--hot));
-  color:white;
-  margin-top:40px;
-}
-
-/* LEVELS */
-
-.level{
-  display:none;
-  min-height:100vh;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-}
-
-.active{display:flex;}
-
-.game-area{
-  width:90vw;
-  max-width:900px;
-  height:500px;
-  background:rgba(255,255,255,0.05);
-  border-radius:20px;
-  position:relative;
-  overflow:hidden;
-  margin-top:40px;
-}
-
-.heart{
-  position:absolute;
-  font-size:30px;
-  cursor:pointer;
-}
-
-.memory{
-  display:grid;
-  grid-template-columns:repeat(4,80px);
-  gap:15px;
-  margin-top:30px;
-}
-
-.card{
-  width:80px;
-  height:80px;
-  background:#ffffff22;
-  border-radius:12px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:30px;
-  cursor:pointer;
-}
-
-/* PROPOSAL */
-
-#proposal{
-  display:none;
-  min-height:100vh;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-}
-
-#proposal h2{
-  font-size:60px;
-}
-
-#message{
-  margin-top:30px;
-  font-size:28px;
-  min-height:60px;
-}
-
-/* NO BUTTON */
-
-#no{
-  position:fixed;
-  background:#ffffff22;
-}
-
-/* CONFETTI */
-
-.confetti{
-  position:fixed;
-  width:10px;
-  height:10px;
-  top:-10px;
-  animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-  to{transform:translateY(110vh) rotate(720deg);}
-}
-
-/* CHARACTER */
-
-.bene{
-  position:fixed;
-  bottom:0;
-  right:40px;
-  width:150px;
-  height:200px;
-  pointer-events:none;
-}
-
-.head{
-  width:120px;
-  height:120px;
-  background:#ffe0bd;
-  border-radius:50%;
-  margin:auto;
-  position:relative;
-  transition:.4s;
-}
-
-.head.blush{
-  background:#ffcccc;
-}
-
-.hair{
-  position:absolute;
-  top:-15px;
-  left:10px;
-  width:100px;
-  height:60px;
-  background:linear-gradient(45deg,#f8d24a,#e6b800);
-  border-radius:60px 60px 40px 40px;
-}
-
-.eyes{
-  position:absolute;
-  top:45px;
-  width:100%;
-  display:flex;
-  justify-content:space-evenly;
-}
-
-.eye{
-  width:30px;
-  height:30px;
-  background:white;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  position:relative;
-}
-
-.pupil{
-  width:14px;
-  height:14px;
-  background:radial-gradient(circle at 30% 30%, #4aa3ff, #003caa);
-  border-radius:50%;
-  position:absolute;
-}
-
-.eye::after{
-  content:"💖";
-  position:absolute;
-  font-size:14px;
-  top:-6px;
-  right:-6px;
-}
-
-.mouth{
-  position:absolute;
-  bottom:25px;
-  left:50%;
-  transform:translateX(-50%);
-  width:40px;
-  height:20px;
-  border-bottom:4px solid #b33;
-  border-radius:0 0 40px 40px;
-}
-
-.ring{
-  font-size:80px;
-  animation:ringPop 1s ease forwards;
-}
-
-@keyframes ringPop{
-  0%{transform:scale(0);}
-  100%{transform:scale(1.2);}
-}
-</style>
-</head>
-
-<body>
-
-<audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0f3c7c7f35.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
-</audio>
-
-<div class="hero active" id="hero">
-  <h1>LARA</h1>
-  <h2>& BENE 💞</h2>
-  <button onclick="start()">Start</button>
-</div>
-
-<div class="level" id="level1">
-  <h2>Level 1 💗</h2>
-  <div class="game-area" id="game1"></div>
-</div>
-
-<div class="level" id="level2">
-  <h2>Level 2 💘</h2>
-  <div class="game-area" id="game2"></div>
-</div>
-
-<div class="level" id="level3">
-  <h2>Level 3 💖</h2>
-  <div class="memory" id="memory"></div>
-</div>
-
-<div id="proposal">
-  <h2>Lara... will you be my Valentine? 💘</h2>
-  <button onclick="yes()">YES 💞</button>
-  <button id="no">No</button>
-  <div id="message"></div>
-</div>
-
-<div class="bene">
-  <div class="head" id="head">
-    <div class="hair"></div>
-    <div class="eyes">
-      <div class="eye"><div class="pupil"></div></div>
-      <div class="eye"><div class="pupil"></div></div>
-    </div>
-    <div class="mouth"></div>
-  </div>
-</div>
-
-<script>
-function start(){
-  document.getElementById("music").play();
-  document.getElementById("hero").style.display="none";
-  show(1);
-}
-
-function show(n){
-  document.querySelectorAll(".level").forEach(l=>l.classList.remove("active"));
-  document.getElementById("level"+n).classList.add("active");
-  if(n===1) level1();
-  if(n===2) level2();
-  if(n===3) level3();
-}
-
-/* LEVEL 1 */
-function level1(){
-  let score=0;
-  const area=document.getElementById("game1");
-  area.innerHTML="";
-  const interval=setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.textContent="💗";
-    h.style.left=Math.random()*90+"%";
-    area.appendChild(h);
-    let pos=0;
-    const fall=setInterval(()=>{
-      pos+=4;
-      h.style.top=pos+"px";
-      if(pos>480){clearInterval(fall);h.remove();}
-    },30);
-    h.onclick=()=>{
-      score++;
-      h.remove();
-      if(score>=10){clearInterval(interval);setTimeout(()=>show(2),800);}
-    }
-  },700);
-}
-
-/* LEVEL 2 */
-function level2(){
-  let score=0;
-  const area=document.getElementById("game2");
-  area.innerHTML="";
-  const interval=setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.textContent="💘";
-    h.style.top=Math.random()*400+"px";
-    h.style.left=Math.random()*800+"px";
-    area.appendChild(h);
-    h.onclick=()=>{
-      score++;
-      h.remove();
-      if(score>=8){clearInterval(interval);setTimeout(()=>show(3),800);}
-    }
-    setTimeout(()=>h.remove(),1500);
-  },900);
-}
-
-/* LEVEL 3 */
-function level3(){
-  const emojis=["💗","💘","💖","💞"];
-  const cards=[...emojis,...emojis].sort(()=>0.5-Math.random());
-  const grid=document.getElementById("memory");
-  grid.innerHTML="";
-  let first=null,lock=false,matched=0;
-  cards.forEach(e=>{
-    const c=document.createElement("div");
-    c.className="card";
-    c.textContent="❓";
-    grid.appendChild(c);
-    c.onclick=()=>{
-      if(lock||c.textContent!=="❓") return;
-      c.textContent=e;
-      if(!first){first=c}
-      else{
-        if(first.textContent===c.textContent){
-          matched++;first=null;
-          if(matched===4){setTimeout(showProposal,800);}
-        }else{
-          lock=true;
-          setTimeout(()=>{
-            c.textContent="❓";
-            first.textContent="❓";
-            first=null;lock=false;
-          },800);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💝 Valentinstag für Lara 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-    }
-  });
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #8b1538 0%, #5c0a28 50%, #8b1538 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">💕</text></svg>') 12 12, auto;
+        }
+
+        /* Floating Hearts Background */
+        .heart-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float-up 8s infinite ease-in;
+            opacity: 0.6;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        
+        /* ===== NEW SIMPLE CUTE CHARACTER ===== */
+        .character {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 170px;
+            height: 210px;
+            z-index: 1000;
+            animation: idleBounce 3s ease-in-out infinite;
+            transition: all 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+
+        @keyframes idleBounce {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .character.sad {
+            bottom: 50%;
+            right: 50%;
+            transform: translate(50%,50%) scale(2.3);
+            animation: none;
+        }
+
+        .character.celebrate {
+            bottom: 50%;
+            right: 50%;
+            transform: translate(50%,50%) scale(2.3);
+            animation: happyJump 0.6s infinite;
+        }
+
+        @keyframes happyJump {
+            0%,100% { transform: translate(50%,50%) scale(2.3) translateY(0); }
+            50% { transform: translate(50%,50%) scale(2.3) translateY(-25px); }
+        }
+
+        .character-head {
+            width:110px;
+            height:110px;
+            background:#ffe0bd;
+            border-radius:50%;
+            margin:0 auto;
+            position:relative;
+        }
+
+        .hair {
+            position:absolute;
+            top:-12px;
+            left:50%;
+            transform:translateX(-50%);
+            width:120px;
+            height:65px;
+            background:#FFD54F;
+            border-radius:70% 70% 45% 45%;
+        }
+
+        .eyes {
+            position:absolute;
+            top:38px;
+            left:50%;
+            transform:translateX(-50%);
+            display:flex;
+            gap:22px;
+        }
+
+        .eye {
+            width:30px;
+            height:36px;
+            background:white;
+            border-radius:50%;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .pupil {
+            width:15px;
+            height:15px;
+            background:#1e88e5;
+            border-radius:50%;
+            position:absolute;
+            top:11px;
+            left:8px;
+        }
+
+        .pupil::after {
+            content:'';
+            position:absolute;
+            width:7px;
+            height:7px;
+            background:white;
+            border-radius:50%;
+            top:2px;
+            left:2px;
+        }
+
+        .mouth {
+            position:absolute;
+            bottom:22px;
+            left:50%;
+            transform:translateX(-50%);
+            width:30px;
+            height:14px;
+            background:#ff69b4;
+            border-radius:0 0 25px 25px;
+            transition:0.3s;
+        }
+
+        .character.sad .mouth {
+            border-radius:25px 25px 0 0;
+            background:#d63384;
+        }
+
+        .character.celebrate .mouth {
+            background:#ff1493;
+            border-radius:0 0 30px 30px;
+        }
+
+        .tear {
+            position:absolute;
+            width:10px;
+            height:16px;
+            background:#4fc3f7;
+            border-radius:50% 0 50% 50%;
+            opacity:0;
+        }
+
+        .tear.left { left:28px; top:70px; }
+        .tear.right { right:28px; top:70px; }
+
+        .character.sad .tear {
+            opacity:1;
+            animation: tearDrop 0.9s infinite ease-in;
+        }
+
+        @keyframes tearDrop {
+            0% { transform: translateY(0); opacity:1; }
+            100% { transform: translateY(55px); opacity:0; }
+        }
+
+        .character-body {
+            width:75px;
+            height:65px;
+            background:#1e88e5;
+            margin:-15px auto 0;
+            border-radius:20px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:1.8em;
+            position:relative;
+        }
+
+        .character.celebrate .character-heart {
+            transform:translateY(-90px) scale(2);
+            transition:0.6s;
+        }
+
+
+        .character-heart.level-1 {
+            font-size: 18px;
+        }
+
+        .character-heart.level-2 {
+            font-size: 24px;
+            animation: heart-beat 1s ease-in-out infinite;
+        }
+
+        .character-heart.level-3 {
+            font-size: 32px;
+            animation: heart-beat 0.8s ease-in-out infinite;
+        }
+
+        .character-heart.celebrate {
+            font-size: 60px;
+            top: -40px;
+            animation: heart-float-celebrate 2s ease-in-out infinite;
+        }
+
+        @keyframes heart-beat {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.15); }
+        }
+
+        @keyframes heart-float-celebrate {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-10px) scale(1.1);
+            }
+        }
+
+        .character-arms {
+            position: absolute;
+            width: 100%;
+            top: 5px;
+        }
+
+        .arm {
+            position: absolute;
+            width: 12px;
+            height: 28px;
+            background: #ffdbac;
+            border-radius: 6px;
+            border: 2px solid #000;
+        }
+
+        .arm.left {
+            left: -10px;
+            animation: wave-left 2.5s ease-in-out infinite;
+        }
+
+        .arm.right {
+            right: -10px;
+            animation: wave-right 2.5s ease-in-out infinite;
+        }
+
+        .character.celebrate .arm.left {
+            animation: celebrate-wave-left 0.8s ease-in-out infinite;
+        }
+
+        .character.celebrate .arm.right {
+            animation: celebrate-wave-right 0.8s ease-in-out infinite;
+        }
+
+        @keyframes wave-left {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        @keyframes wave-right {
+            0%, 100% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+        }
+
+        @keyframes celebrate-wave-left {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(45deg); }
+        }
+
+        @keyframes celebrate-wave-right {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(-45deg); }
+        }
+
+        .character-legs {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .leg {
+            width: 10px;
+            height: 12px;
+            background: #2196F3;
+            border-radius: 0 0 12px 12px;
+            border: 2px solid #000;
+            border-top: none;
+        }
+
+        .shoe {
+            width: 14px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+            margin-top: -2px;
+        }
+        }
+
+        /* Heart on chest */
+        .character-heart {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0px;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 10;
+            filter: drop-shadow(0 3px 8px rgba(255, 20, 147, 0.5));
+        }
+
+        .character-heart.level-1 {
+            font-size: 20px;
+        }
+
+        .character-heart.level-2 {
+            font-size: 28px;
+            animation: heart-beat 1s ease-in-out infinite;
+        }
+
+        .character-heart.level-3 {
+            font-size: 38px;
+            animation: heart-beat 0.8s ease-in-out infinite;
+        }
+
+        .character-heart.celebrate {
+            font-size: 70px;
+            top: -50px;
+            animation: heart-float-celebrate 2s ease-in-out infinite;
+        }
+
+        @keyframes heart-beat {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+        }
+
+        @keyframes heart-float-celebrate {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0px) rotate(-10deg) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-15px) rotate(10deg) scale(1.1);
+            }
+        }
+
+        .character-arms {
+            position: absolute;
+            width: 100%;
+            top: 5px;
+        }
+
+        .arm {
+            position: absolute;
+            width: 15px;
+            height: 35px;
+            background: #ffe0bd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .arm.left {
+            left: -12px;
+            animation: wave-left 2.5s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        .arm.right {
+            right: -12px;
+            animation: wave-right 2.5s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        .character.celebrate .arm.left {
+            animation: celebrate-wave-left 0.8s ease-in-out infinite;
+        }
+
+        .character.celebrate .arm.right {
+            animation: celebrate-wave-right 0.8s ease-in-out infinite;
+        }
+
+        @keyframes wave-left {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(15deg); }
+        }
+
+        @keyframes wave-right {
+            0%, 100% { transform: rotate(5deg); }
+            50% { transform: rotate(-15deg); }
+        }
+
+        @keyframes celebrate-wave-left {
+            0%, 100% { transform: rotate(-40deg); }
+            50% { transform: rotate(40deg); }
+        }
+
+        @keyframes celebrate-wave-right {
+            0%, 100% { transform: rotate(40deg); }
+            50% { transform: rotate(-40deg); }
+        }
+
+        /* Simple legs */
+        .character-legs {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .leg {
+            width: 12px;
+            height: 15px;
+            background: #4CAF50;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .shoe {
+            width: 16px;
+            height: 8px;
+            background: #333;
+            border-radius: 50%;
+            margin-top: -2px;
+        }
+
+        /* Secret Hearts that appear on click */
+        .secret-heart {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            animation: secret-heart-float 2s ease-out forwards;
+            z-index: 999;
+        }
+
+        @keyframes secret-heart-float {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Hidden message */
+        .hidden-message {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #ff1493;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .hidden-message.show {
+            opacity: 1;
+        }
+
+        /* Rose petals falling occasionally */
+        .rose-petal {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff1493;
+            border-radius: 50% 0;
+            animation: petal-fall 5s linear forwards;
+            opacity: 0.7;
+        }
+
+        @keyframes petal-fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border: 3px solid #ff69b4;
+            animation: container-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes container-glow {
+            0%, 100% {
+                box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(255, 20, 147, 0.7), 0 0 30px rgba(255, 105, 180, 0.5);
+            }
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: #ff1493;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .question {
+            font-size: 1.8em;
+            color: #d63384;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            min-height: 80px;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+        }
+
+        .yes-btn:not(:disabled):hover {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+        }
+
+        .yes-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #fff, #ffe4e9);
+            color: #d63384;
+            border: 2px solid #ff69b4;
+            position: absolute;
+            transition: all 0.15s ease-out;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .no-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .no-btn.final-position {
+            position: relative;
+            left: auto;
+            transform: none;
+        }
+
+        .button-wrapper {
+            position: relative;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .no-btn-container {
+            position: relative;
+            width: 140px;
+            height: 60px;
+        }
+
+        /* Mini Games */
+        .minigame {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fff5f8, #ffe4ec);
+            border-radius: 20px;
+            border: 2px solid #ffb6c1;
+        }
+
+        .minigame.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Game Intro Screen */
+        .game-intro {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .game-intro.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .game-intro h2 {
+            color: #ff1493;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .game-intro p {
+            font-size: 1.2em;
+            color: #d63384;
+            margin-bottom: 30px;
+        }
+
+        
+
+        
+            50% { transform: scale(1.2); }
+        }
+
+        .start-game-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .start-game-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Developer Skip Button */
+        .dev-skip {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid #666;
+            border-radius: 5px;
+            font-size: 0.8em;
+            cursor: pointer;
+            z-index: 9999;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .dev-skip:hover {
+            opacity: 1;
+        }
+
+        .minigame h2 {
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .progress {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #d63384;
+            font-weight: bold;
+        }
+
+        /* Game 1: Memory Game */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .memory-card:hover {
+            transform: scale(1.08);
+        }
+
+        .memory-card.flipped {
+            background: white;
+        }
+
+        .memory-card.matched {
+            background: #98fb98;
+            pointer-events: none;
+            animation: match-celebration 0.5s ease;
+        }
+
+        @keyframes match-celebration {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15) rotate(5deg); }
+        }
+
+        /* Game 2: Love Quiz */
+        .quiz-option {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 2px solid #ffb6c1;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.5s;
+        }
+
+        .quiz-option:hover::before {
+            left: 100%;
+        }
+
+        .quiz-option:hover {
+            background: #ffe4ec;
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .quiz-option.correct {
+            background: #98fb98;
+            border-color: #4caf50;
+            animation: correct-bounce 0.5s ease;
+        }
+
+        @keyframes correct-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .quiz-option.wrong {
+            background: #ffcccb;
+            border-color: #f44336;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Game 3: Heart Catcher */
+        .game-canvas {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, #fff, #ffe4ec);
+            border-radius: 15px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ff69b4;
+        }
+
+        .catcher {
+            position: absolute;
+            bottom: 10px;
+            width: 50px;
+            height: 20px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border-radius: 10px;
+            transition: left 0.05s linear;
+            box-shadow: 0 3px 10px rgba(255, 20, 147, 0.5);
+        }
+
+        .falling-heart {
+            position: absolute;
+            font-size: 28px;
+            animation: fall 2.5s linear;
+            pointer-events: none;
+        }
+
+        .broken-heart {
+            position: absolute;
+            font-size: 28px;
+            animation: fall 2s linear;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
+
+        @keyframes fall {
+            from {
+                top: -30px;
+                transform: rotate(0deg);
+            }
+            to {
+                top: 100%;
+                transform: rotate(360deg);
+            }
+        }
+
+        .game-score {
+            font-size: 1.2em;
+            color: #ff1493;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .game-instruction {
+            font-size: 0.9em;
+            color: #d63384;
+            margin: 5px 0;
+        }
+
+        /* Game 4: Sliding Puzzle */
+        .puzzle-container {
+            width: 450px;
+            height: 450px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            background: #ff69b4;
+            padding: 5px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        .puzzle-tile {
+            background-size: 450px 450px;
+            background-position: 0 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .puzzle-tile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.5);
+        }
+
+        .puzzle-tile.empty {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px dashed #ff1493;
+            cursor: default;
+        }
+
+        .puzzle-tile.empty:hover {
+            transform: none;
+        }
+
+        .puzzle-moves {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #ff1493;
+            font-weight: bold;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            position: fixed;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .success-message {
+            display: none;
+            font-size: 2em;
+            color: #ff1493;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 20px;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden Message -->
+    <div class="hidden-message" id="hiddenMessage">💕 Du hast ein geheimes Herz gefunden! 💕</div>
+
+    <!-- Developer Skip Button -->
+    <button class="dev-skip" id="devSkip">⚡ Skip Game (Dev)</button>
+
+    <!-- Splash Screen -->
+    <div class="screen active" id="splashScreen">
+        <div style="text-align: center;">
+            <h1 style="font-size: 5em; color: #ff1493; margin-bottom: 20px; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); letter-spacing: 0.1em;">LARA</h1>
+            <h2 style="font-size: 3em; color: white; margin: 20px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">& BENE 💕</h2>
+            <button style="margin-top: 40px; padding: 20px 60px; font-size: 1.5em; background: linear-gradient(135deg, #ff1493, #ff69b4); color: white; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(255,20,147,0.5); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="document.getElementById('splashScreen').classList.remove('active'); document.querySelector('.container').style.display='block'; document.getElementById('startScreen').classList.add('active');">Start</button>
+        </div>
+    </div>
+
+    <!-- Floating Hearts Background -->
+    <div class="heart-container" id="heartContainer"></div>
+
+    <!-- Cute Character -->
+
+    <div class="character" id="character">
+        <div class="character-head">
+            <div class="hair"></div>
+            <div class="eyes">
+                <div class="eye"><div class="pupil"></div></div>
+                <div class="eye"><div class="pupil"></div></div>
+            </div>
+            <div class="mouth"></div>
+            <div class="tear left"></div>
+            <div class="tear right"></div>
+        </div>
+        <div class="character-body">
+            <div class="character-heart" id="characterHeart">💖</div>
+        </div>
+    </div>
+
+
+    <!-- Main Container -->
+    <div class="container" style="display:none;">
+        <!-- Start Screen -->
+        <div class="screen" id="startScreen">
+            <h1>💕 Für Lara 💕</h1>
+            <p class="question">Lara, willst du mein Valentinstags-Date sein? 💝</p>
+            <div class="buttons" style="display: flex; gap: 30px; justify-content: center; position: relative;">
+                <button class="yes-btn" id="startYesBtn" disabled style="position: relative;">Ja! ❤️</button>
+                <button class="no-btn" id="startNoBtn" style="position: relative; left: auto; transform: none;">Nein 💔</button>
+            </div>
+            <p style="color: #999; font-size: 0.9em; margin-top: 20px; font-style: italic;">
+                ✨ Klicke auf eine Antwort... ✨
+            </p>
+        </div>
+
+        <!-- Games Screen -->
+        <div class="screen" id="gamesScreen">
+            <h1>💕 Für Lara 💕</h1>
+            <div class="progress" id="progress">Fortschritt: 0/4 Spiele geschafft ✨</div>
+
+            <!-- Game 1 Intro -->
+            <div class="game-intro active" id="game1Intro">
+                <h2>🎴 Spiel 1: Herz-Memory 🎴</h2>
+                <p>Finde alle 8 passenden Herz-Paare!<br>Merke dir gut wo sie sind! 💕</p>
+                
+                <button class="start-game-btn" id="startGame1">Los geht's! 🚀</button>
+            </div>
+
+            <!-- Game 1: Memory -->
+            <div class="minigame" id="game1">
+                <h2>🎴 Herz-Memory 🎴</h2>
+                <p>Finde alle passenden Herz-Paare!</p>
+                <div class="memory-grid" id="memoryGrid"></div>
+            </div>
+
+            <!-- Game 2 Intro -->
+            <div class="game-intro" id="game2Intro">
+                <h2>❓ Spiel 2: Liebes-Quiz ❓</h2>
+                <p>Beantworte 4 Fragen über die Liebe!<br>Wähle die beste Antwort! 💝</p>
+                
+                <button class="start-game-btn" id="startGame2">Ich bin bereit! 💪</button>
+            </div>
+
+            <!-- Game 2: Quiz -->
+            <div class="minigame" id="game2">
+                <h2>❓ Liebes-Quiz ❓</h2>
+                <p>Beantworte die Fragen richtig!</p>
+                <div id="quizContainer"></div>
+            </div>
+
+            <!-- Game 3 Intro -->
+            <div class="game-intro" id="game3Intro">
+                <h2>💖 Spiel 3: Herz-Fänger 💖</h2>
+                <p>Fange 20 gute Herzen! 💖<br>Aber vermeide die gebrochenen Herzen! 💔</p>
+                
+                <button class="start-game-btn" id="startGame3">Auf die Plätze! 🎯</button>
+            </div>
+
+            <!-- Game 3: Heart Catcher -->
+            <div class="minigame" id="game3">
+                <h2>💖 Herz-Fänger 💖</h2>
+                <p class="game-instruction">🚫 Vermeide die gebrochenen Herzen! 💔</p>
+                <div class="game-score" id="catchScore">Punkte: 0/20 | Gebrochen: 0</div>
+                <div class="game-canvas" id="gameCanvas">
+                    <div class="catcher" id="catcher"></div>
+                </div>
+            </div>
+
+            <!-- Game 4 Intro -->
+            <div class="game-intro" id="game4Intro">
+                <h2>🧩 Spiel 4: Herz-Puzzle 🧩</h2>
+                <p>Löse das Schiebe-Puzzle!<br>Klicke auf Kacheln neben dem leeren Feld! 🎨</p>
+                
+                <button class="start-game-btn" id="startGame4">Challenge accepted! 🔥</button>
+            </div>
+
+            <!-- Game 4: Sliding Puzzle -->
+            <div class="minigame" id="game4">
+                <h2>🧩 Herz-Puzzle 🧩</h2>
+                <p>Ordne die Kacheln richtig an!</p>
+                <div class="puzzle-moves" id="puzzleMoves">Züge: 0</div>
+                <div class="puzzle-container" id="puzzleContainer"></div>
+            </div>
+
+            <div class="success-message" id="successMsg">
+                🎉 Alle Spiele gemeistert! Jetzt kannst du antworten! 🎉
+            </div>
+        </div>
+
+        <!-- Final Question Screen -->
+        <div class="screen" id="finalScreen">
+            <h1>💕 Die letzte Frage 💕</h1>
+            <p class="question">Also... willst du mein Valentinstags-Date sein? 💝</p>
+            <div class="button-wrapper">
+                <button class="yes-btn" id="finalYesBtn">Ja! ❤️</button>
+                <div class="no-btn-container">
+                    <button class="no-btn final-position" id="finalNoBtn">Nein 💔</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="screen" id="successScreen">
+            <h1 style="font-size: 3em;">🎉 JAAA! 🎉</h1>
+            <p style="font-size: 2em; color: #ff1493; margin: 30px 0;">
+                Ich freue mich so sehr! 💕
+            </p>
+            <p style="font-size: 1.5em; color: #d63384;">
+                Das wird das beste Valentinstags-Date aller Zeiten! 🌹
+            </p>
+            <div style="font-size: 4em; margin: 30px 0;">
+                💝💖💗💕💓💞💘
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Eye tracking
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            updateEyes();
+        });
+
+        function updateEyes() {
+            const pupils = document.querySelectorAll('.pupil');
+            pupils.forEach(pupil => {
+                const eye = pupil.parentElement;
+                const eyeRect = eye.getBoundingClientRect();
+                const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+                const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+                
+                const angle = Math.atan2(mouseY - eyeCenterY, mouseX - eyeCenterX);
+                const distance = Math.min(6, Math.hypot(mouseX - eyeCenterX, mouseY - eyeCenterY) / 40);
+                
+                const pupilX = Math.cos(angle) * distance;
+                const pupilY = Math.sin(angle) * distance;
+                
+                pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+            });
+        }
+
+        // Secret click hearts
+        let secretClickCount = 0;
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') {
+                secretClickCount++;
+                const heart = document.createElement('div');
+                heart.className = 'secret-heart';
+                const hearts = ['💕', '💖', '💗', '💝', '💓', '💞'];
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+
+                if (secretClickCount === 10) {
+                    showHiddenMessage('💫 Du hast 10 geheime Klicks gemacht! 💫');
+                }
+            }
+        });
+
+        // Rose petals occasionally
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                const petal = document.createElement('div');
+                petal.className = 'rose-petal';
+                petal.style.left = Math.random() * 100 + '%';
+                document.body.appendChild(petal);
+                setTimeout(() => petal.remove(), 5000);
+            }
+        }, 2000);
+
+        // Hidden message system
+        function showHiddenMessage(text) {
+            const msg = document.getElementById('hiddenMessage');
+            msg.textContent = text;
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('heartContainer');
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '💗';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 10000);
+            }, 300);
+        }
+
+        // Screen management
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Start screen
+        document.getElementById('startNoBtn').addEventListener('click', () => {
+            // Character gets sad first
+            const character = document.getElementById('character');
+            character.classList.add('sad');
+            
+            showHiddenMessage('💔 Oh nein... das macht mich so traurig... 💔');
+            
+            // Wait 4 seconds for longer crying animation
+            setTimeout(() => {
+                character.classList.remove('sad');
+                showScreen('gamesScreen');
+                showHiddenMessage('🎮 Lass die Spiele beginnen! 🎮');
+            }, 4000);
+        });
+
+        let gamesCompleted = 0;
+        const totalGames = 4;
+
+        function updateProgress() {
+            document.getElementById('progress').textContent = `Fortschritt: ${gamesCompleted}/${totalGames} Spiele geschafft ✨`;
+            
+            // Update character heart on chest
+            const heart = document.getElementById('characterHeart');
+            if (gamesCompleted <= 3) {
+                heart.className = 'character-heart level-' + gamesCompleted;
+            }
+            
+            if (gamesCompleted === totalGames) {
+                document.getElementById('successMsg').style.display = 'block';
+                createSparkles();
+                setTimeout(() => {
+                    showFinalScreen();
+                }, 2000);
+            }
+        }
+
+        function nextGame(currentGame) {
+            document.getElementById(`game${currentGame}`).classList.remove('active');
+            if (currentGame < totalGames) {
+                // Show intro for next game
+                showGameIntro(currentGame + 1);
+            }
+        }
+
+        function showGameIntro(gameNum) {
+    const intro = document.getElementById(`game${gameNum}Intro`);
+    intro.classList.add('active');
 }
 
-function showProposal(){
-  document.querySelectorAll(".level").forEach(l=>l.style.display="none");
-  document.getElementById("proposal").style.display="flex";
-}
+// Game intro start buttons
+        document.getElementById('startGame1').addEventListener('click', () => {
+            document.getElementById('game1Intro').classList.remove('active');
+            document.getElementById('game1').classList.add('active');
+        });
 
-/* NO BUTTON ESCAPE */
-const no=document.getElementById("no");
-document.addEventListener("mousemove",e=>{
-  const rect=no.getBoundingClientRect();
-  const dist=Math.hypot(e.clientX-(rect.left+rect.width/2),e.clientY-(rect.top+rect.height/2));
-  if(dist<150){
-    no.style.left=Math.random()*window.innerWidth+"px";
-    no.style.top=Math.random()*window.innerHeight+"px";
-  }
-});
+        document.getElementById('startGame2').addEventListener('click', () => {
+            document.getElementById('game2Intro').classList.remove('active');
+            document.getElementById('game2').classList.add('active');
+            initQuizGame();
+        });
 
-/* YES */
-function yes(){
-  document.getElementById("head").classList.add("blush");
-  const ring=document.createElement("div");
-  ring.className="ring";
-  ring.textContent="💍";
-  document.getElementById("proposal").prepend(ring);
-  typeText("Danke dass du da bist, ich liebe dich meine mausi");
-  confetti();
-}
+        document.getElementById('startGame3').addEventListener('click', () => {
+            document.getElementById('game3Intro').classList.remove('active');
+            document.getElementById('game3').classList.add('active');
+            initHeartCatcher();
+        });
 
-function typeText(text){
-  let i=0;
-  const el=document.getElementById("message");
-  el.textContent="";
-  const interval=setInterval(()=>{
-    el.textContent+=text[i];
-    i++;
-    if(i>=text.length) clearInterval(interval);
-  },70);
-}
+        document.getElementById('startGame4').addEventListener('click', () => {
+            document.getElementById('game4Intro').classList.remove('active');
+            document.getElementById('game4').classList.add('active');
+            initSlidingPuzzle();
+        });
 
-function confetti(){
-  for(let i=0;i<200;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=["#ff4fa3","#ff2d55","#fff"][Math.floor(Math.random()*3)];
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),4000);
-  }
-}
+        // Developer skip feature
+        document.getElementById('devSkip').addEventListener('click', () => {
+            gamesCompleted++;
+            updateProgress();
+            if (gamesCompleted < totalGames) {
+                // Hide all games and intros
+                for (let i = 1; i <= totalGames; i++) {
+                    document.getElementById(`game${i}`)?.classList.remove('active');
+                    document.getElementById(`game${i}Intro`)?.classList.remove('active');
+                }
+                nextGame(gamesCompleted);
+            }
+            showHiddenMessage('⚡ Game Skipped! ⚡');
+        });
 
-/* EYE TRACK */
-const pupils=document.querySelectorAll(".pupil");
-document.addEventListener("mousemove",e=>{
-  pupils.forEach(p=>{
-    const rect=p.parentElement.getBoundingClientRect();
-    const cx=rect.left+rect.width/2;
-    const cy=rect.top+rect.height/2;
-    const angle=Math.atan2(e.clientY-cy,e.clientX-cx);
-    const r=6;
-    p.style.transform=`translate(${Math.cos(angle)*r}px,${Math.sin(angle)*r}px)`;
-  });
-});
-</script>
+        // Game 1: Memory Game
+        const emojis = ['💕', '💖', '💗', '💝', '💓', '💞', '💘', '❤️'];
+        let memoryCards = [...emojis, ...emojis];
+        let flippedCards = [];
+        let matchedPairs = 0;
 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initMemoryGame() {
+            const grid = document.getElementById('memoryGrid');
+            memoryCards = shuffleArray(memoryCards);
+            
+            memoryCards.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                card.innerHTML = '💝';
+                card.addEventListener('click', flipCard);
+                grid.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            if (flippedCards.length === 2) return;
+            if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
+
+            this.classList.add('flipped');
+            this.innerHTML = this.dataset.emoji;
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 600);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (card1.dataset.emoji === card2.dataset.emoji) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                showHiddenMessage('✨ Perfektes Match! ✨');
+                if (matchedPairs === emojis.length) {
+                    setTimeout(() => {
+                        gamesCompleted++;
+                        updateProgress();
+                        nextGame(1);
+                        initQuizGame();
+                        showHiddenMessage('🎯 Spiel 1 gemeistert! 🎯');
+                    }, 500);
+                }
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.innerHTML = '💝';
+                card2.innerHTML = '💝';
+            }
+            flippedCards = [];
+        }
+
+        // Game 2: Quiz - NEUE FRAGEN
+        
+        // Game 2: Quiz - LARA & BENE EDITION
+        const quizQuestions = [
+            {
+                question: "Wann haben wir uns zum ersten mal gesehen?",
+                options: ["07.02.2025","08.11.2025","02.07.2025","08.11.2025","13.10.2025"],
+                correct: 1
+            },
+            {
+                question: "Wann war unser erstes mal?",
+                options: ["21.03.25","26.03.25","24.03.25","19.03.25"],
+                correct: 0
+            },
+            {
+                question: "Wie schreibt man Heubeck?",
+                options: ["Heuberg","Habeck","Hubek","Heubek","Kuchenberg","Heubeck"],
+                correct: 5
+            },
+            {
+                question: "Was ist mein Fetisch?",
+                options: ["Gore","Anal","Latex","Fuß","Gilf","Vouyerismus"],
+                correct: 3
+            },
+            {
+                question: "Wer war der Freiheitskämpfer in Südostalbanien im 16. Jahrhundert?",
+                options: ["Skandenberg","Konstandin","Mihal Artioti","Gjon Buzuku","Dhimeter Frengu","Es gab keinen einzelnen Freiheitskämpfer"],
+                correct: 5
+            },
+            {
+                question: "In einem Krimi stehen der Gärtner, das Dienstmädchen und die Köchin unter dringendem Tatverdacht. Genau eine Vermutung war richtig. Wer ist der Mörder?",
+                options: ["Gärtner","Dienstmädchen","Köchin","Keiner davon"],
+                correct: 0
+            }
+        ];
+
+
+        let currentQuizQuestion = 0;
+
+        function initQuizGame() {
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const container = document.getElementById('quizContainer');
+            const q = quizQuestions[currentQuizQuestion];
+            
+            container.innerHTML = `
+                <h3 style="color: #d63384; margin-bottom: 15px;">${q.question}</h3>
+                ${q.options.map((opt, i) => `
+                    <div class="quiz-option" data-index="${i}">${opt}</div>
+                `).join('')}
+            `;
+
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.addEventListener('click', checkQuizAnswer);
+            });
+        }
+
+        function checkQuizAnswer(e) {
+            const selected = parseInt(e.target.dataset.index);
+            const correct = quizQuestions[currentQuizQuestion].correct;
+            
+            if (selected === correct) {
+                e.target.classList.add('correct');
+                showHiddenMessage('🎊 Richtig! 🎊');
+                setTimeout(() => {
+                    currentQuizQuestion++;
+                    if (currentQuizQuestion < quizQuestions.length) {
+                        showQuizQuestion();
+                    } else {
+                        gamesCompleted++;
+                        updateProgress();
+                        nextGame(2);
+                        initHeartCatcher();
+                        showHiddenMessage('🎯 Spiel 2 gemeistert! 🎯');
+                    }
+                }, 1000);
+            } else {
+                e.target.classList.add('wrong');
+                showHiddenMessage('💭 Versuch es nochmal! 💭');
+                setTimeout(() => {
+                    e.target.classList.remove('wrong');
+                }, 500);
+            }
+        }
+
+        // Game 3: Heart Catcher with broken hearts (HARDER)
+        let catcherPos = 225;
+        let caughtHearts = 0;
+        let brokenHeartsCaught = 0;
+        let gameInterval;
+        let brokenInterval;
+
+        function initHeartCatcher() {
+            const canvas = document.getElementById('gameCanvas');
+            const catcher = document.getElementById('catcher');
+            
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                catcherPos = e.clientX - rect.left - 25;
+                catcherPos = Math.max(0, Math.min(catcherPos, rect.width - 50));
+                catcher.style.left = catcherPos + 'px';
+            });
+
+            gameInterval = setInterval(createFallingHeart, 1100); // Slower good hearts
+            brokenInterval = setInterval(createBrokenHeart, 500); // Keep broken hearts rate
+        }
+
+        function createFallingHeart() {
+            const canvas = document.getElementById('gameCanvas');
+            const heart = document.createElement('div');
+            heart.className = 'falling-heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * (canvas.offsetWidth - 30) + 'px';
+            heart.dataset.type = 'good';
+            canvas.appendChild(heart);
+
+            const fallInterval = setInterval(() => {
+                const heartRect = heart.getBoundingClientRect();
+                const catcherRect = document.getElementById('catcher').getBoundingClientRect();
+                
+                if (heartRect.bottom >= catcherRect.top &&
+                    heartRect.left < catcherRect.right &&
+                    heartRect.right > catcherRect.left &&
+                    heart.dataset.type === 'good') {
+                    caughtHearts++;
+                    updateCatchScore();
+                    heart.remove();
+                    clearInterval(fallInterval);
+                    showHiddenMessage('💖 +1 Herz! 💖');
+                    
+                    if (caughtHearts >= 20) {
+                        clearInterval(gameInterval);
+                        clearInterval(brokenInterval);
+                        gamesCompleted++;
+                        updateProgress();
+                        nextGame(3);
+                        showHiddenMessage('🎯 Spiel 3 geschafft! 🎯');
+                    }
+                }
+            }, 50);
+
+            setTimeout(() => {
+                heart.remove();
+                clearInterval(fallInterval);
+            }, 2500);
+        }
+
+        function createBrokenHeart() {
+            const canvas = document.getElementById('gameCanvas');
+            const heart = document.createElement('div');
+            heart.className = 'broken-heart';
+            heart.innerHTML = '💔';
+            heart.style.left = Math.random() * (canvas.offsetWidth - 30) + 'px';
+            heart.dataset.type = 'bad';
+            canvas.appendChild(heart);
+
+            const fallInterval = setInterval(() => {
+                const heartRect = heart.getBoundingClientRect();
+                const catcherRect = document.getElementById('catcher').getBoundingClientRect();
+                
+                if (heartRect.bottom >= catcherRect.top &&
+                    heartRect.left < catcherRect.right &&
+                    heartRect.right > catcherRect.left &&
+                    heart.dataset.type === 'bad') {
+                    brokenHeartsCaught++;
+                    caughtHearts = Math.max(0, caughtHearts - 2);
+                    updateCatchScore();
+                    heart.remove();
+                    clearInterval(fallInterval);
+                    showHiddenMessage('💔 -2 Herzen! Vermeide diese! 💔');
+                }
+            }, 50);
+
+            setTimeout(() => {
+                heart.remove();
+                clearInterval(fallInterval);
+            }, 2000);
+        }
+
+        function updateCatchScore() {
+            document.getElementById('catchScore').textContent = 
+                `Punkte: ${caughtHearts}/20 | Gebrochen: ${brokenHeartsCaught}`;
+        }
+
+        // Game 4: Sliding Puzzle
+        let puzzleTiles = [];
+        let emptyTile = 8;
+        let moveCount = 0;
+        const puzzleSize = 3;
+
+        function initSlidingPuzzle() {
+            const container = document.getElementById('puzzleContainer');
+            container.innerHTML = '';
+            moveCount = 0;
+            document.getElementById('puzzleMoves').textContent = 'Züge: 0';
+            
+            // Create solved puzzle first
+            puzzleTiles = Array.from({length: 9}, (_, i) => i);
+            emptyTile = 8;
+            
+            // Shuffle with valid moves
+            shufflePuzzle();
+            
+            // Render tiles
+            renderPuzzle();
+        }
+
+        function shufflePuzzle() {
+            // Make 50 random valid moves to shuffle
+            for (let i = 0; i < 50; i++) {
+                const validMoves = getValidMoves();
+                const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                swapTiles(emptyTile, randomMove);
+            }
+            moveCount = 0; // Reset counter after shuffle
+        }
+
+        function getValidMoves() {
+            const moves = [];
+            const row = Math.floor(emptyTile / puzzleSize);
+            const col = emptyTile % puzzleSize;
+            
+            if (row > 0) moves.push(emptyTile - 3); // Up
+            if (row < puzzleSize - 1) moves.push(emptyTile + 3); // Down
+            if (col > 0) moves.push(emptyTile - 1); // Left
+            if (col < puzzleSize - 1) moves.push(emptyTile + 1); // Right
+            
+            return moves;
+        }
+
+        function swapTiles(empty, tile) {
+            [puzzleTiles[empty], puzzleTiles[tile]] = [puzzleTiles[tile], puzzleTiles[empty]];
+            emptyTile = tile;
+        }
+
+        function renderPuzzle() {
+            const container = document.getElementById('puzzleContainer');
+            container.innerHTML = '';
+            
+            puzzleTiles.forEach((tileNum, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'puzzle-tile';
+                tile.dataset.index = index;
+                
+                if (tileNum === 8) {
+                    tile.classList.add('empty');
+                } else {
+                    // Set background position based on tile number
+                    const row = Math.floor(tileNum / puzzleSize);
+                    const col = tileNum % puzzleSize;
+                    tile.style.backgroundImage = 'url("puzzle_image.svg")';
+                    tile.style.backgroundPosition = `${-col * 150}px ${-row * 150}px`;
+                    
+                    // Add click listener
+                    tile.addEventListener('click', function() {
+                        handleTileClick(parseInt(this.dataset.index));
+                    });
+                }
+                
+                container.appendChild(tile);
+            });
+        }
+
+        function handleTileClick(index) {
+            const validMoves = getValidMoves();
+            if (validMoves.includes(index)) {
+                swapTiles(emptyTile, index);
+                moveCount++;
+                document.getElementById('puzzleMoves').textContent = `Züge: ${moveCount}`;
+                renderPuzzle();
+                
+                if (isPuzzleSolved()) {
+                    setTimeout(() => {
+                        showHiddenMessage('🎉 Puzzle gelöst! 🎉');
+                        gamesCompleted++;
+                        updateProgress();
+                        nextGame(4);
+                    }, 500);
+                }
+            }
+        }
+
+        function isPuzzleSolved() {
+            for (let i = 0; i < 9; i++) {
+                if (puzzleTiles[i] !== i) return false;
+            }
+            return true;
+        }
+
+        // Final screen - No button teleports away (FIXED AND WORKING)
+        const finalNoBtn = document.getElementById('finalNoBtn');
+        const finalYesBtn = document.getElementById('finalYesBtn');
+        const DETECTION_RADIUS = 150;
+        let noBtnCheckInterval;
+        let lastTeleport = 0;
+
+        // Completely prevent any clicks
+        finalNoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            teleportNoButton();
+            showHiddenMessage('😏 Nice try! 😏');
+            return false;
+        }, true);
+
+        finalNoBtn.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            teleportNoButton();
+            return false;
+        }, true);
+
+        finalNoBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }, true);
+
+        function startNoButtonTracking() {
+            if (noBtnCheckInterval) clearInterval(noBtnCheckInterval);
+            
+            noBtnCheckInterval = setInterval(() => {
+                if (!document.getElementById('finalScreen').classList.contains('active')) {
+                    return;
+                }
+                
+                const now = Date.now();
+                if (now - lastTeleport < 200) return; // Prevent too frequent teleports
+                
+                const btnRect = finalNoBtn.getBoundingClientRect();
+                const btnCenterX = btnRect.left + btnRect.width / 2;
+                const btnCenterY = btnRect.top + btnRect.height / 2;
+                
+                const distance = Math.hypot(mouseX - btnCenterX, mouseY - btnCenterY);
+                
+                if (distance < DETECTION_RADIUS) {
+                    teleportNoButton();
+                    lastTeleport = now;
+                }
+            }, 50);
+        }
+
+        function teleportNoButton() {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const btnWidth = 140;
+            const btnHeight = 60;
+            
+            let newX, newY, distance;
+            let attempts = 0;
+            const minDistance = 250;
+            
+            // Try to find a position far from cursor
+            do {
+                newX = Math.random() * (vw - btnWidth - 100) + 50;
+                newY = Math.random() * (vh - btnHeight - 100) + 50;
+                distance = Math.hypot(mouseX - (newX + btnWidth/2), mouseY - (newY + btnHeight/2));
+                attempts++;
+            } while (distance < minDistance && attempts < 30);
+            
+            // Position relative to viewport
+            finalNoBtn.style.position = 'fixed';
+            finalNoBtn.style.left = newX + 'px';
+            finalNoBtn.style.top = newY + 'px';
+            finalNoBtn.style.transform = 'rotate(' + (Math.random() * 360) + 'deg) scale(0.9)';
+            finalNoBtn.style.transition = 'all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            
+            setTimeout(() => {
+                finalNoBtn.style.transform = 'rotate(0deg) scale(1)';
+            }, 150);
+        }
+
+        function showFinalScreen() {
+            showScreen('finalScreen');
+            showHiddenMessage('💝 Jetzt kommt die finale Frage! 💝');
+            
+            // Reset button position
+            finalNoBtn.style.position = 'relative';
+            finalNoBtn.style.left = 'auto';
+            finalNoBtn.style.top = 'auto';
+            finalNoBtn.style.transform = 'none';
+            
+            setTimeout(() => {
+                startNoButtonTracking();
+            }, 500);
+        }
+
+        finalYesBtn.addEventListener('click', () => {
+            // Character celebration!
+            const character = document.getElementById('character');
+            const heart = document.getElementById('characterHeart');
+            
+            character.classList.add('celebrate');
+            heart.classList.add('celebrate');
+            
+            // Show confetti and success
+            createConfetti();
+            showScreen('successScreen');
+            
+            // Extra celebration effects
+            setTimeout(() => {
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const celebHeart = document.createElement('div');
+                        celebHeart.className = 'secret-heart';
+                        celebHeart.innerHTML = '💕';
+                        celebHeart.style.left = Math.random() * 100 + '%';
+                        celebHeart.style.top = Math.random() * 100 + '%';
+                        document.body.appendChild(celebHeart);
+                        setTimeout(() => celebHeart.remove(), 2000);
+                    }, i * 80);
+                }
+            }, 500);
+            
+            showHiddenMessage('🎉 SIE HAT JA GESAGT! 🎉');
+        });
+
+        function createConfetti() {
+            const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#ff6b9d', '#ff8fab', '#ffb6c1'];
+            const shapes = ['💕', '💖', '💗', '💝', '💓', '💞', '💘', '❤️', '🌹'];
+            
+            for (let i = 0; i < 200; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    
+                    if (Math.random() > 0.5) {
+                        confetti.className = 'confetti';
+                        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                        confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    } else {
+                        confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                        confetti.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    }
+                    
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-20px';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.animationDelay = '0s';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 15);
+            }
+        }
+
+        function createSparkles() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.innerHTML = '✨';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = (Math.random() * 1) + 's';
+                container.appendChild(sparkle);
+            }
+        }
+
+        // Konami code easter egg
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-8);
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                showHiddenMessage('🎮 Konami Code aktiviert! Du bist ein Gamer! 🎮');
+                createConfetti();
+            }
+        });
+
+        // Initialize
+        createFloatingHearts();
+        initMemoryGame();
+        updateProgress();
+        
+        // Random love quotes that appear occasionally
+        const loveQuotes = [
+            '💭 "Liebe ist, wenn aus dem Du und Ich ein Wir wird" 💭',
+            '💭 "Du bist der Grund, warum ich lächle" 💭',
+            '💭 "In deinen Augen finde ich mein Zuhause" 💭',
+            '💭 "Jeder Moment mit dir ist besonders" 💭',
+            '💭 "Du machst meine Welt bunter" 💭'
+        ];
+        
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const quote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+                showHiddenMessage(quote);
+            }
+        }, 10000);
+        
+        // Initialize puzzle for game 4
+        initSlidingPuzzle();
+    </script>
 </body>
 </html>
