@@ -1452,7 +1452,7 @@
                 correct: 5
             },
             {
-                question: "In einem Krimi stehen der Gärtner, das Dienstmädchen und die Köchin unter dringendem Tatverdacht. Vier Personen äußern Vermutungen über den Einzeltäter:  Fritz: „Das Dienstmädchen war es.“ Tom: „Ich denke, der Gärtner war der Mörder.“ Lara: „Die Köchin war es bestimmt nicht.“ Siri: „Das Dienstmädchen war es nicht.“  Es stellte sich heraus, dass genau eine dieser Vermutungen zutraf.  Wer ist der Mörder?",
+                question: "In einem Krimi stehen der Gärtner, das Dienstmädchen und die Köchin unter dringendem Tatverdacht. Genau eine Vermutung war richtig. Wer ist der Mörder?",
                 options: ["Gärtner","Dienstmädchen","Köchin","Keiner davon"],
                 correct: 0
             }
@@ -1674,7 +1674,45 @@
                     // Set background position based on tile number
                     const row = Math.floor(tileNum / puzzleSize);
                     const col = tileNum % puzzleSize;
-                    tile.style.backgroundImage = 'url("puzzle_image.svg")';
+                    
+
+const svg = `
+<svg xmlns='http://www.w3.org/2000/svg' width='450' height='450'>
+
+  <defs>
+    <linearGradient id='bg1' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#ff9acb'/>
+      <stop offset='100%' stop-color='#ff4fa3'/>
+    </linearGradient>
+    <linearGradient id='bg2' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#ffd6ec'/>
+      <stop offset='100%' stop-color='#ff85c1'/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width='450' height='450' fill='url(#bg1)'/>
+
+  <!-- Big Heart -->
+  <text x='225' y='220' font-size='180' text-anchor='middle' fill='white'>💘</text>
+
+  <!-- Decorative smaller hearts in corners -->
+  <text x='60' y='80' font-size='50' fill='white'>💖</text>
+  <text x='360' y='80' font-size='50' fill='white'>💕</text>
+  <text x='60' y='420' font-size='50' fill='white'>💗</text>
+  <text x='360' y='420' font-size='50' fill='white'>💞</text>
+
+  <!-- Romantic text centered lower -->
+  <text x='225' y='360' font-size='55' text-anchor='middle' fill='white' font-family='Georgia'>Happy</text>
+  <text x='225' y='410' font-size='55' text-anchor='middle' fill='white' font-family='Georgia'>Valentine 💝</text>
+
+</svg>`;
+
+const encoded = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+tile.style.backgroundImage = `url("${encoded}")`;
+tile.style.backgroundSize = "450px 450px";
+
+
                     tile.style.backgroundPosition = `${-col * 150}px ${-row * 150}px`;
                     
                     // Add click listener
@@ -1925,4 +1963,3 @@
     </script>
 </body>
 </html>
-
