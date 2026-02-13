@@ -1677,36 +1677,10 @@
                     
 
 const svg = `
-<svg xmlns='http://www.w3.org/2000/svg' width='450' height='450'>
+tile.style.backgroundImage =
+'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0NTAnIGhlaWdodD0nNDUwJz4KPHJlY3Qgd2lkdGg9JzQ1MCcgaGVpZ2h0PSc0NTAnIGZpbGw9JyNmZjRhYTUnLz4KPHRleHQgeD0nMjI1JyB5PScyMjAnIGZvbnQtc2l6ZT0nMTgwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPSd3aGl0ZSc+8J+SqTwvdGV4dD4KPHRleHQgeD0nMjI1JyB5PSczNjAnIGZvbnQtc2l6ZT0nNTAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZpbGw9J3doaXRlJyBmb250LWZhbWlseT0nR2VvcmdpYSc+SGFwcHkgVmFsZW50aW5lPC90ZXh0Pgo8L3N2Zz4=")';
+tile.style.backgroundSize = "450px 450px";
 
-  <defs>
-    <linearGradient id='bg1' x1='0%' y1='0%' x2='100%' y2='100%'>
-      <stop offset='0%' stop-color='#ff9acb'/>
-      <stop offset='100%' stop-color='#ff4fa3'/>
-    </linearGradient>
-    <linearGradient id='bg2' x1='0%' y1='0%' x2='100%' y2='100%'>
-      <stop offset='0%' stop-color='#ffd6ec'/>
-      <stop offset='100%' stop-color='#ff85c1'/>
-    </linearGradient>
-  </defs>
-
-  <!-- Background -->
-  <rect width='450' height='450' fill='url(#bg1)'/>
-
-  <!-- Big Heart -->
-  <text x='225' y='220' font-size='180' text-anchor='middle' fill='white'>💘</text>
-
-  <!-- Decorative smaller hearts in corners -->
-  <text x='60' y='80' font-size='50' fill='white'>💖</text>
-  <text x='360' y='80' font-size='50' fill='white'>💕</text>
-  <text x='60' y='420' font-size='50' fill='white'>💗</text>
-  <text x='360' y='420' font-size='50' fill='white'>💞</text>
-
-  <!-- Romantic text centered lower -->
-  <text x='225' y='360' font-size='55' text-anchor='middle' fill='white' font-family='Georgia'>Happy</text>
-  <text x='225' y='410' font-size='55' text-anchor='middle' fill='white' font-family='Georgia'>Valentine 💝</text>
-
-</svg>`;
 
 const encoded = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
 tile.style.backgroundImage = `url("${encoded}")`;
@@ -1963,3 +1937,4 @@ tile.style.backgroundSize = "450px 450px";
     </script>
 </body>
 </html>
+
